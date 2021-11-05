@@ -14,32 +14,25 @@ import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver
 import org.springframework.instrument.classloading.LoadTimeWeaver;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 @Slf4j
 @SpringBootApplication
 @EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
 @EnableLoadTimeWeaving(aspectjWeaving = EnableLoadTimeWeaving.AspectJWeaving.ENABLED)
 public class AspectjApplication implements LoadTimeWeavingConfigurer {
+  public static void main(String[] args) {
+    try (ConfigurableApplicationContext applicationContext = SpringApplication.run(AspectjApplication.class, args)) {}
+  }
 
-	public static void main(String[] args) {
-    try (ConfigurableApplicationContext applicationContext = SpringApplication.run(AspectjApplication.class, args)) {
-    }
-	}
+  @Bean
+  public ApplicationRunner run(FooService fooService) {
+    return (args) -> {
+      log.info("running ...");
+      fooService.m1();
+    };
+  }
 
-
-	@Bean
-	public ApplicationRunner run(FooService fooService) {
-
-		return (args) -> {
-
-			log.info("running ..");
-			fooService.m1();
-		};
-	}
-
-	@Override
-	public LoadTimeWeaver getLoadTimeWeaver() {
-		return new InstrumentationLoadTimeWeaver();
-	}
-
+  @Override
+  public LoadTimeWeaver getLoadTimeWeaver() {
+    return new InstrumentationLoadTimeWeaver();
+  }
 }
