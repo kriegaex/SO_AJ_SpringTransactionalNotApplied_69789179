@@ -1,20 +1,15 @@
 package com.example.aspectj.services;
 
-
-import javax.transaction.Transactional;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+import javax.transaction.Transactional;
 
 @Service
 @Slf4j
 public class BooService {
-
-    @Transactional
-    public void m3() {
-        log.info("m3 : called");
-    }
-
-
+  @Transactional
+  public void m3() {
+    log.info("m3: called");
+  }
 }

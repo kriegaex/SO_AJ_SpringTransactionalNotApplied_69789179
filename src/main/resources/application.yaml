@@ -1,7 +1,6 @@
 server:
   port: 8080
 
-
 logging:
   level:
     org:
@@ -10,5 +9,3 @@ logging:
           interceptor: trace
         orm:
           jpa: trace
-
-
